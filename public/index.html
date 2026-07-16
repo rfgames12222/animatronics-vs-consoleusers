@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Animatronics vs Console User - Multiplayer 3D</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- MENU: criar ou entrar em sala -->
+<div id="screen-menu" class="panel">
+  <h1>🎮 ANIMATRONICS VS CONSOLE USER</h1>
+  <h2 style="font-size:14px;color:#7a7a7a;">Modo Multiplayer - Cooperativo (até 5 guardas)</h2>
+
+  <label style="text-align:center;display:block;">Como você vai jogar?</label>
+  <div class="row">
+    <button class="btn btn-active" id="btn-device-pc">🖥️ PC</button>
+    <button class="btn" id="btn-device-mobile">📱 Celular</button>
+  </div>
+
+  <hr style="border-color:#1c3d24; margin:20px 0;">
+
+  <div id="create-box">
+    <h2>Criar Sala (você vira o anfitrião)</h2>
+    <label>Noite inicial</label>
+    <select id="night-select">
+      <option value="1">Noite 1</option>
+      <option value="2">Noite 2</option>
+      <option value="3">Noite 3</option>
+      <option value="4">Noite 4</option>
+      <option value="5">Noite 5</option>
+    </select>
+    <input id="host-key-input" type="password" placeholder="Chave de anfitrião (se configurada)">
+    <div class="row"><button class="btn" id="btn-create">CRIAR SALA</button></div>
+  </div>
+
+  <hr style="border-color:#1c3d24; margin:20px 0;">
+
+  <div id="join-box">
+    <h2>Entrar em Sala</h2>
+    <input id="join-code-input" placeholder="Código da sala (ex: AB12)" maxlength="6">
+    <div class="row"><button class="btn" id="btn-join">ENTRAR</button></div>
+  </div>
+
+  <p class="error-msg" id="menu-error"></p>
+</div>
+
+<!-- LOBBY / ESPERA -->
+<div id="screen-waiting" class="panel hidden">
+  <h2>Sala criada!</h2>
+  <p style="text-align:center;">Envie este código para os outros guardas (até 5 no total):</p>
+  <div class="code-display" id="room-code-display"></div>
+  <p style="text-align:center;" id="lobby-count">Guardas conectados: 1/5</p>
+
+  <div class="row" id="host-controls" style="display:none;">
+    <button class="btn" id="btn-start">COMEÇAR NOITE</button>
+  </div>
+  <p style="text-align:center;color:#7a7a7a;" id="waiting-hint">Aguardando o anfitrião começar a partida...</p>
+</div>
+
+<!-- TELA DE JOGO (3D) - todos os guardas usam a mesma -->
+<div id="screen-game" class="hidden">
+  <canvas id="game-canvas"></canvas>
+
+  <div id="hud-overlay">
+    <div class="hud">
+      <span id="time-display"></span>
+      <span id="power-display"></span>
+    </div>
+    <p id="music-box"></p>
+    <div id="alert-box" class="alert"></div>
+  </div>
+
+  <div id="crosshair">+</div>
+
+  <div id="pointer-lock-hint">
+    <strong>Clique para travar o mouse e jogar</strong><br><br>
+    WASD move · Mouse olha · SPACE pula<br>
+    F lanterna · Q máscara · E abre/fecha porta (fique perto dela)<br><br>
+    <span style="color:#7a7a7a;font-size:12px;">Vocês dividem o mesmo escritório: qualquer guarda pode
+    apertar qualquer botão, o estado é o mesmo pra todo mundo.</span>
+  </div>
+
+  <!-- Controles touch - só aparecem em celular/tablet (ver isTouchDevice no game.js) -->
+  <div id="mobile-controls" class="hidden">
+    <div id="look-layer"></div>
+
+    <div id="dpad">
+      <button id="dpad-up" class="dpad-btn">▲</button>
+      <button id="dpad-left" class="dpad-btn">◀</button>
+      <button id="dpad-right" class="dpad-btn">▶</button>
+      <button id="dpad-down" class="dpad-btn">▼</button>
+    </div>
+
+    <div id="action-buttons">
+      <button id="btn-jump" class="action-btn">PULAR</button>
+      <button id="btn-mobile-light" class="action-btn">LANTERNA</button>
+      <button id="btn-mobile-mask" class="action-btn">MÁSCARA</button>
+      <button id="btn-mobile-door" class="action-btn">PORTA</button>
+    </div>
+  </div>
+</div>
+
+<!-- FIM DE JOGO -->
+<div id="screen-overlay" class="panel hidden">
+  <div class="overlay-text" id="overlay-content"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
