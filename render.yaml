@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: animatronics-multiplayer
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: HOST_KEY
+        sync: false # opcional: defina no painel do Render se quiser travar quem cria salas
